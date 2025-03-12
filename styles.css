@@ -196,6 +196,40 @@
 
 }
 
+@keyframes goToHell {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(0.1) rotateX(720deg);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateX(200%);
+        opacity: 0;
+
+    }
+}
+
+@keyframes goToHeaven {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(0.1) rotateX(720deg);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateX(-200%);
+        opacity: 0;
+
+    }
+}
+
 /* @keyframes hiddenTitle {
     0% {
         margin-bottom: 2vw;
@@ -260,6 +294,7 @@ button {
     padding: 1vw 0.5vw;
     flex-shrink: 0;
     transition-duration: 0.3s;
+    cursor: pointer;
 }
 
 button:hover,
@@ -377,6 +412,7 @@ body {
     font-size: 1.388vw;
     text-align: center;
     margin-top: calc(var(--container-margin-y) * 2);
+    overflow-x: hidden;
 }
 
 .container {
@@ -384,6 +420,7 @@ body {
     padding-inline: var(--container-padding-x);
     margin-inline: auto;
     /* margin-block: var(--container-margin-y); */
+
 }
 
 h1 {
@@ -438,7 +475,10 @@ h1 {
 
 .header__done {
     margin-right: 3vw;
+
 }
+
+
 
 .header__list {
     display: flex;
@@ -501,6 +541,18 @@ h1 {
     animation-duration: 0.3s;
     animation-timing-function: linear;
 
+}
+
+.done__tip {
+    position: absolute;
+    transform: translateX(-110%) translateY(-20%);
+    width: 10vw;
+    font-size: 0.8vw;
+    font-weight: 600;
+    opacity: 0;
+    animation-name: delayTip;
+    animation-duration: 3s;
+    animation-delay: 15s;
 }
 
 .todo__title-list {
@@ -695,6 +747,19 @@ label {
     animation-duration: 2s;
 }
 
+
+.go_to_hell {
+    animation-name: goToHell;
+    animation-duration: 2s;
+}
+
+.go_to_heaven {
+    animation-name: goToHeaven;
+    animation-duration: 3s;
+}
+
+
+
 .todo__high .checkbox__task:hover {
     box-shadow: var(--box-shadow-high);
 }
@@ -754,6 +819,8 @@ label {
     overflow-wrap: break-word;
     text-align: left;
 }
+
+
 
 @media (max-width: 768px) {
     .container {

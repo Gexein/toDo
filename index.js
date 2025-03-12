@@ -3,11 +3,11 @@ const select = document.querySelector('form select')
 const highBlock = document.querySelector('.todo__high')
 const mediumBlock = document.querySelector('.todo__medium')
 const lowBlock = document.querySelector('.todo__low')
-const dialogDoneList = document.querySelector('.dialog__done-list')
 const defaultInputValue = ''
 let toDoList = []
 let doneList = []
 const priorities = { HIGH: 'high', MEDIUM: 'medium', LOW: 'low' }
+const statuses = { DONE: 'done', TODO: 'to do' }
 
 function addTask(event) {
     event.preventDefault();
@@ -20,13 +20,13 @@ function addTask(event) {
     const taskInput = document.querySelector('form input')
     let taskInputValue = taskInput.value
     if (select.value === 'low') {
-        toDoList.push({ task: taskInputValue, priority: priorities.LOW })
+        toDoList.push({ task: taskInputValue, priority: priorities.LOW, status: statuses.TODO })
     }
     else if (select.value === 'medium') {
-        toDoList.push({ task: taskInputValue, priority: priorities.MEDIUM })
+        toDoList.push({ task: taskInputValue, priority: priorities.MEDIUM, status: statuses.TODO })
     }
     else {
-        toDoList.push({ task: taskInputValue, priority: priorities.HIGH })
+        toDoList.push({ task: taskInputValue, priority: priorities.HIGH, status: statuses.TODO })
     }
     event.target.reset()
     for (const obj of toDoList) {
@@ -49,7 +49,6 @@ function addTask(event) {
         }
     }
 }
-
 addTaskForm.addEventListener('submit', addTask)
 
 function deleteTask(event) {
@@ -61,15 +60,25 @@ function deleteTask(event) {
             toDoList.splice(neededIndex, 1)
         }
     })
-    event.target.parentElement.remove()
+
+    const timerRemover = () => {
+        event.target.parentElement.remove()
+    }
+    let parent = event.target.parentElement
+    parent.classList.add('go_to_hell')
+
+    setTimeout(timerRemover, 1500)
+
 }
 
 function changeStatus(event) {
     const neededTextContent = String(event.target.parentElement.childNodes[5].textContent)
     const neededPriority = String(event.target.parentElement.parentElement.parentElement.id);
+    const dialogDoneList = document.querySelector('.dialog__done-list')
 
     toDoList.forEach((obj) => {
         if (obj.task === neededTextContent && obj.priority === neededPriority) {
+            obj.status = statuses.DONE
             let neededIndex = toDoList.indexOf(obj)
             let cutterArray = toDoList.splice(neededIndex, 1)
             doneList = doneList.concat(cutterArray)
@@ -77,7 +86,12 @@ function changeStatus(event) {
     })
 
     dialogDoneList.insertAdjacentHTML('afterbegin', `<li class="dialog__done-item">${neededTextContent}</li>`)
-    event.target.parentElement.parentElement.remove()
+    const timerRemover = () => {
+        event.target.parentElement.parentElement.remove()
+    }
+    let parent = event.target.parentElement.parentElement
+    parent.classList.add('go_to_heaven')
+    setTimeout(timerRemover, 2000)
 }
 
 
